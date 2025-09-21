@@ -5,7 +5,7 @@ import { Shield, Star, Heart } from "lucide-react"
 
 export default function About() {
   return (
-    <section className="relative bg-black text-gray-300 py-20 px-6">
+    <section id="about" className="relative bg-black text-gray-300 py-20 px-6">
       {/* Glow Overlay */}
       <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#B6963B]/10 rounded-full blur-3xl" />
 
