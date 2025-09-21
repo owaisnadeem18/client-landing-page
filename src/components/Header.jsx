@@ -1,70 +1,54 @@
 "use client"
-import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react"
+import { Menu, X } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import Image from "next/image"
+import { motion } from "framer-motion"
 
 export function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      setScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "Services", href: "#services" },
     { name: "About", href: "#about" },
     { name: "Contact", href: "#contact" },
-  ];
+  ]
 
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`sticky top-0 z-50 transition-all duration-500 overflow-hidden ${
+      className={`sticky top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-gradient-to-r from-rose-50/80 via-white/80 to-rose-50/80 backdrop-blur-md shadow-md"
-          : "bg-gradient-to-r from-rose-50 via-white to-rose-50"
+          ? "bg-black/90 backdrop-blur-md shadow-md"
+          : "bg-black/70"
       }`}
     >
-      {/* Floating Bubbles */}
-      <div className="absolute inset-0 overflow-hidden -z-10">
-        {[...Array(5)].map((_, i) => (
-          <span
-            key={i}
-            className="absolute w-16 h-16 bg-rose-200/30 rounded-full blur-xl animate-float"
-            style={{
-              left: `${20 * i}%`,
-              animationDelay: `${i * 3}s`,
-            }}
-          ></span>
-        ))}
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-16">
-          {/* Logo with glow + breathing */}
-          <motion.div
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 4, repeat: Infinity }}
-            className="relative w-44 h-44 drop-shadow-lg"
-          >
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
             <Image
               src="/logo-massage-app.png"
-              alt="MassageSpa Logo"
-              fill
-              className="object-cover rounded-md"
+              alt="Opulent Touch Logo"
+              width={180}
+              height={180}
+              className="rounded-md"
             />
-          </motion.div>
+            
+          </Link>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8">
@@ -77,9 +61,9 @@ export function Header() {
               >
                 <Link
                   href={link.href}
-                  className="relative text-sm font-medium text-gray-700 transition-colors hover:text-rose-600 
-                  after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 
-                  after:bg-rose-400 after:transition-all after:duration-500 hover:after:w-full"
+                  className="relative text-sm font-medium text-gray-200 transition-colors hover:text-[#B6963B]
+                  after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0
+                  after:bg-[#B6963B] after:transition-all after:duration-500 hover:after:w-full"
                 >
                   {link.name}
                 </Link>
@@ -89,8 +73,11 @@ export function Header() {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 200 }}
             >
-              <Button size="sm" className="ml-2 shadow-md hover:shadow-lg">
-                Book Now
+              <Button
+                size="sm"
+                className="ml-2 bg-[#B6963B] text-black hover:bg-[#d1a94e]"
+              >
+                Request Consultation
               </Button>
             </motion.div>
           </nav>
@@ -100,9 +87,13 @@ export function Header() {
             <button
               aria-label="Open menu"
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded-md hover:bg-gray-100 focus:outline-none transition"
+              className="p-2 rounded-md hover:bg-gray-800 transition"
             >
-              {mobileOpen ? <X /> : <Menu />}
+              {mobileOpen ? (
+                <X className="text-[#B6963B]" />
+              ) : (
+                <Menu className="text-[#B6963B]" />
+              )}
             </button>
           </div>
         </div>
@@ -115,7 +106,7 @@ export function Header() {
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-sm"
+          className="md:hidden bg-black/95 backdrop-blur-md border-t border-gray-800 shadow-sm"
         >
           <div className="px-4 pt-3 pb-5 space-y-2">
             {navLinks.map((l, i) => (
@@ -128,21 +119,20 @@ export function Header() {
                 <Link
                   href={l.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block py-2 text-sm font-medium text-gray-700 hover:text-rose-600 transition-colors"
+                  className="block py-2 text-sm font-medium text-gray-200 hover:text-[#B6963B] transition-colors"
                 >
                   {l.name}
                 </Link>
               </motion.div>
             ))}
             <motion.div whileHover={{ scale: 1.02 }}>
-              <Button className="mt-2 w-full shadow-md hover:shadow-lg">
-                Book Now
+              <Button className="mt-2 w-full bg-[#B6963B] text-black hover:bg-[#d1a94e]">
+                Request Consultation
               </Button>
             </motion.div>
           </div>
         </motion.div>
       )}
     </motion.header>
-  );
+  )
 }
-
