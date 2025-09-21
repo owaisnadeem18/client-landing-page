@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { NavItems } from "./NavItem"
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -21,7 +22,9 @@ export function Header() {
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "Services", href: "#services" },
+    { name: "Packages", href: "#packages" },
     { name: "About", href: "#about" },
+    { name: "Testimonials", href: "#testimonials" },
     { name: "Contact", href: "#contact" },
   ]
 
@@ -47,32 +50,12 @@ export function Header() {
               height={180}
               className="rounded-md"
             />
-            
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link, i) => (
-              <motion.div
-                key={link.name}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.15, duration: 0.6 }}
-              >
-                <Link
-                  href={link.href}
-                  className="relative text-sm font-medium text-gray-200 transition-colors hover:text-[#B6963B]
-                  after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0
-                  after:bg-[#B6963B] after:transition-all after:duration-500 hover:after:w-full"
-                >
-                  {link.name}
-                </Link>
-              </motion.div>
-            ))}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 200 }}
-            >
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-8">
+            <NavItems links={navLinks} variant="desktop" />
+            <motion.div whileHover={{ scale: 1.05 }}>
               <Button
                 size="sm"
                 className="ml-2 bg-[#B6963B] text-black hover:bg-[#d1a94e]"
@@ -80,7 +63,7 @@ export function Header() {
                 Request Consultation
               </Button>
             </motion.div>
-          </nav>
+          </div>
 
           {/* Mobile Hamburger */}
           <div className="md:hidden">
@@ -104,27 +87,15 @@ export function Header() {
         <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
           className="md:hidden bg-black/95 backdrop-blur-md border-t border-gray-800 shadow-sm"
         >
           <div className="px-4 pt-3 pb-5 space-y-2">
-            {navLinks.map((l, i) => (
-              <motion.div
-                key={l.name}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <Link
-                  href={l.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block py-2 text-sm font-medium text-gray-200 hover:text-[#B6963B] transition-colors"
-                >
-                  {l.name}
-                </Link>
-              </motion.div>
-            ))}
+            <NavItems
+              links={navLinks}
+              onClick={() => setMobileOpen(false)}
+              variant="mobile"
+            />
             <motion.div whileHover={{ scale: 1.02 }}>
               <Button className="mt-2 w-full bg-[#B6963B] text-black hover:bg-[#d1a94e]">
                 Request Consultation
