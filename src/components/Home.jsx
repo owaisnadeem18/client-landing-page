@@ -1,14 +1,13 @@
 "use client"
 
-import React from 'react'
+import React from "react"
 import { Button } from "./ui/button"
-import { Briefcase, Users, Crown } from "lucide-react"
+import { Briefcase, Users, Crown, Handshake } from "lucide-react"
 import { motion } from "framer-motion"
-import Link from 'next/link'
+import Link from "next/link"
 
 const Home = () => {
   return (
-    
     <section
       id="home"
       className="relative flex flex-col items-center justify-center text-center overflow-hidden"
@@ -42,27 +41,41 @@ const Home = () => {
 
         {/* CTA Buttons */}
         <div className="mt-10 flex justify-center gap-6 flex-wrap">
+          {/* Primary Button */}
           <motion.div whileHover={{ scale: 1.05 }}>
-  <Button
-    size="sm"
-    onClick={() => {
-      const section = document.getElementById("contact")
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" })
-        // Agar URL hash bhi dikhana ho toh:
-        window.history.pushState(null, "", "#contact")
-      }
-    }}
-    className="ml-2 bg-[#B6963B] text-black hover:bg-[#d1a94e] rounded-xl shadow-md hover:shadow-lg transition"
-  >
-    Request Private Consultation
-  </Button>
-</motion.div>
+            <Button
+              size="lg"
+              onClick={() => {
+                const section = document.getElementById("contact")
+                if (section) {
+                  section.scrollIntoView({ behavior: "smooth" })
+                  window.history.pushState(null, "", "#contact")
+                }
+              }}
+              className="relative flex items-center gap-2 overflow-hidden rounded-2xl px-8 py-3 font-semibold text-black 
+                         bg-gradient-to-r from-[#d1b464] via-[#B6963B] to-[#8a6e2f] 
+                         shadow-[0_0_25px_rgba(182,150,59,0.6)] 
+                         transition-all duration-500 hover:scale-105 hover:shadow-[0_0_40px_rgba(182,150,59,0.9)]"
+            >
+              <Handshake className="w-5 h-5 relative z-10" />
+              <span className="relative z-10">Request Private Consultation</span>
+              {/* Shine Animation */}
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
+                               translate-x-[-100%] hover:translate-x-[100%] 
+                               transition-transform duration-700" />
+            </Button>
+          </motion.div>
+
+          {/* Secondary Button */}
           <Link
             href="#packages"
-            className="px-4 py-2 border border-[#B6963B] rounded-2xl text-lg text-[#B6963B] hover:bg-[#B6963B] hover:text-black transition-all shadow-md hover:shadow-xl"
+            className="relative px-8 py-3 rounded-2xl font-medium text-[#B6963B] border border-[#B6963B] 
+                       bg-black/20 backdrop-blur-md shadow-md 
+                       hover:bg-[#B6963B] hover:text-black 
+                       hover:shadow-[0_0_25px_rgba(182,150,59,0.7)] 
+                       transition-all duration-500"
           >
-            Explore Packages
+            Explore Packages →
           </Link>
         </div>
 
@@ -78,9 +91,7 @@ const Home = () => {
           {/* Basic */}
           <div className="bg-black/60 border border-[#B6963B]/50 rounded-2xl p-10 shadow-lg hover:scale-105 hover:border-[#B6963B] transition-all duration-300">
             <Briefcase className="w-12 h-12 text-[#B6963B] mb-6" />
-            <h3 className="text-2xl font-semibold text-[#B6963B]">
-              Basic Wellness
-            </h3>
+            <h3 className="text-2xl font-semibold text-[#B6963B]">Basic Wellness</h3>
             <p className="mt-4 text-gray-300 text-sm leading-relaxed">
               Stress-relief workshops and monthly wellness sessions for a
               refreshed, motivated team.
@@ -90,21 +101,17 @@ const Home = () => {
           {/* Hybrid */}
           <div className="bg-black/60 border border-[#B6963B]/50 rounded-2xl p-10 shadow-lg hover:scale-105 hover:border-[#B6963B] transition-all duration-300">
             <Users className="w-12 h-12 text-[#B6963B] mb-6" />
-            <h3 className="text-2xl font-semibold text-[#B6963B]">
-              Hybrid Package
-            </h3>
+            <h3 className="text-2xl font-semibold text-[#B6963B]">Hybrid Package</h3>
             <p className="mt-4 text-gray-300 text-sm leading-relaxed">
-              A blend of virtual & on-site programs, fitness plans, and
-              nutrition consulting tailored for dynamic teams.
+              A blend of virtual & on-site programs, fitness plans, and nutrition
+              consulting tailored for dynamic teams.
             </p>
           </div>
 
           {/* Executive */}
           <div className="bg-black/60 border border-[#B6963B]/50 rounded-2xl p-10 shadow-lg hover:scale-105 hover:border-[#B6963B] transition-all duration-300">
             <Crown className="w-12 h-12 text-[#B6963B] mb-6" />
-            <h3 className="text-2xl font-semibold text-[#B6963B]">
-              Executive Elite
-            </h3>
+            <h3 className="text-2xl font-semibold text-[#B6963B]">Executive Elite</h3>
             <p className="mt-4 text-gray-300 text-sm leading-relaxed">
               Exclusive one-on-one care, luxury wellness retreats, and complete
               corporate health strategy integration.

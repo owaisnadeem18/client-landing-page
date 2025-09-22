@@ -1,6 +1,10 @@
+"use client"
+
 import { Facebook, Instagram, Twitter } from "lucide-react"
 import Image from "next/image"
 import Logo from "../../public/logo-massage-app.png" 
+import Link from "next/link"
+import { motion } from "framer-motion"
 
 export function Footer() {
   return (
@@ -11,20 +15,19 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-gray-700 pb-6">
           
           {/* Logo + Tagline */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <Image src={Logo} alt="MassageSpa Logo" width={120} height={50} />
+          <div className="flex flex-col items-center md:items-center text-center md:text-left">
+            <Image
+  src={Logo}
+  alt="MassageSpa Logo"
+  width={220}
+  height={220}
+  className="animate-spin-slow"
+/>
             <p className="mt-2 text-sm text-gray-400">
               Relax. Refresh. Rejuvenate.
             </p>
           </div>
 
-          {/* Footer Nav */}
-          <div className="flex gap-6 text-sm font-medium">
-            <a href="#about" className="hover:text-white transition">About</a>
-            <a href="#" className="hover:text-white transition">Services</a>
-            <a href="#" className="hover:text-white transition">Privacy</a>
-            <a href="#" className="hover:text-white transition">Terms</a>
-          </div>
 
           {/* Social Icons */}
           <div className="flex gap-4">
