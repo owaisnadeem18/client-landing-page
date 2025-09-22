@@ -4,6 +4,7 @@ import React from 'react'
 import { Button } from "./ui/button"
 import { Briefcase, Users, Crown } from "lucide-react"
 import { motion } from "framer-motion"
+import Link from 'next/link'
 
 const Home = () => {
   return (
@@ -41,15 +42,28 @@ const Home = () => {
 
         {/* CTA Buttons */}
         <div className="mt-10 flex justify-center gap-6 flex-wrap">
-          <Button className="bg-[#B6963B] text-black hover:bg-[#d1a94e] text-lg px-8 py-4 rounded-2xl shadow-md hover:shadow-xl transition-all">
-            Request a Private Consultation
-          </Button>
-          <a
+          <motion.div whileHover={{ scale: 1.05 }}>
+  <Button
+    size="sm"
+    onClick={() => {
+      const section = document.getElementById("contact")
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" })
+        // Agar URL hash bhi dikhana ho toh:
+        window.history.pushState(null, "", "#contact")
+      }
+    }}
+    className="ml-2 bg-[#B6963B] text-black hover:bg-[#d1a94e] rounded-xl shadow-md hover:shadow-lg transition"
+  >
+    Request Private Consultation
+  </Button>
+</motion.div>
+          <Link
             href="#packages"
-            className="px-8 py-4 border border-[#B6963B] rounded-2xl text-lg text-[#B6963B] hover:bg-[#B6963B] hover:text-black transition-all shadow-md hover:shadow-xl"
+            className="px-4 py-2 border border-[#B6963B] rounded-2xl text-lg text-[#B6963B] hover:bg-[#B6963B] hover:text-black transition-all shadow-md hover:shadow-xl"
           >
             Explore Packages
-          </a>
+          </Link>
         </div>
 
         {/* Packages Section */}
