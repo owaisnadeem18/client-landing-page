@@ -2,14 +2,13 @@
 
 import React from "react"
 import { Button } from "./ui/button"
-import { Briefcase, Users, Crown, Handshake } from "lucide-react"
+import { Handshake, Building2, ShieldCheck } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 
 const Home = () => {
   return (
     <section
-      id="home"
       className="relative flex flex-col items-center justify-center text-center overflow-hidden"
       style={{ minHeight: "calc(100vh - 133.5px)" }}
     >
@@ -29,14 +28,14 @@ const Home = () => {
       >
         {/* Headline */}
         <h1 className="text-4xl sm:text-6xl font-extrabold text-[#B6963B] leading-tight tracking-wide">
-          Elevate Workplace Wellness. <br /> Empower Productivity.
+          Premium Partnerships. <br /> Co-Branded Wellness Experiences.
         </h1>
 
         {/* Subtext */}
         <p className="mt-6 text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-          Opulent Touch curates bespoke wellness programs designed exclusively
-          for executives and organizations. A balance of luxury, focus, and
-          elevated performance.
+          From luxury hotels to elite residences, Opulent Touch empowers brands 
+          to deliver seamless, co-branded wellness experiences that elevate 
+          guest and resident satisfaction.
         </p>
 
         {/* CTA Buttons */}
@@ -45,21 +44,13 @@ const Home = () => {
           <motion.div whileHover={{ scale: 1.05 }}>
             <Button
               size="lg"
-              onClick={() => {
-                const section = document.getElementById("contact")
-                if (section) {
-                  section.scrollIntoView({ behavior: "smooth" })
-                  window.history.pushState(null, "", "#contact")
-                }
-              }}
               className="relative flex items-center gap-2 overflow-hidden rounded-2xl px-8 py-3 font-semibold text-black 
                          bg-gradient-to-r from-[#d1b464] via-[#B6963B] to-[#8a6e2f] 
                          shadow-[0_0_25px_rgba(182,150,59,0.6)] 
                          transition-all duration-500 hover:scale-105 hover:shadow-[0_0_40px_rgba(182,150,59,0.9)]"
             >
               <Handshake className="w-5 h-5 relative z-10" />
-              <span className="relative z-10">Request Private Consultation</span>
-              {/* Shine Animation */}
+              <span className="relative z-10">Partner With Us</span>
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
                                translate-x-[-100%] hover:translate-x-[100%] 
                                transition-transform duration-700" />
@@ -68,56 +59,56 @@ const Home = () => {
 
           {/* Secondary Button */}
           <Link
-            href="#packages"
+            href="/login"
             className="relative px-8 py-3 rounded-2xl font-medium text-[#B6963B] border border-[#B6963B] 
                        bg-black/20 backdrop-blur-md shadow-md 
                        hover:bg-[#B6963B] hover:text-black 
                        hover:shadow-[0_0_25px_rgba(182,150,59,0.7)] 
                        transition-all duration-500"
           >
-            Explore Packages →
+            Resident / Guest Login →
           </Link>
         </div>
 
-        {/* Packages Section */}
+        <section id="benifits">
+
+        {/* Partnership Benefits */}
         <motion.div
-          id="packages"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
           className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-10 text-left"
         >
-          {/* Basic */}
+          {/* Co-Branding */}
           <div className="bg-black/60 border border-[#B6963B]/50 rounded-2xl p-10 shadow-lg hover:scale-105 hover:border-[#B6963B] transition-all duration-300">
-            <Briefcase className="w-12 h-12 text-[#B6963B] mb-6" />
-            <h3 className="text-2xl font-semibold text-[#B6963B]">Basic Wellness</h3>
+            <Building2 className="w-12 h-12 text-[#B6963B] mb-6" />
+            <h3 className="text-2xl font-semibold text-[#B6963B]">Seamless Co-Branding</h3>
             <p className="mt-4 text-gray-300 text-sm leading-relaxed">
-              Stress-relief workshops and monthly wellness sessions for a
-              refreshed, motivated team.
+              White-label portals customized with your brand alongside Opulent Touch for a premium, unified experience.
             </p>
           </div>
 
-          {/* Hybrid */}
+          {/* Partnerships */}
           <div className="bg-black/60 border border-[#B6963B]/50 rounded-2xl p-10 shadow-lg hover:scale-105 hover:border-[#B6963B] transition-all duration-300">
-            <Users className="w-12 h-12 text-[#B6963B] mb-6" />
-            <h3 className="text-2xl font-semibold text-[#B6963B]">Hybrid Package</h3>
+            <Handshake className="w-12 h-12 text-[#B6963B] mb-6" />
+            <h3 className="text-2xl font-semibold text-[#B6963B]">Stronger Partnerships</h3>
             <p className="mt-4 text-gray-300 text-sm leading-relaxed">
-              A blend of virtual & on-site programs, fitness plans, and nutrition
-              consulting tailored for dynamic teams.
+              Collaborate with us to elevate guest satisfaction, resident loyalty, and brand value through luxury wellness.
             </p>
           </div>
 
-          {/* Executive */}
+          {/* Trust */}
           <div className="bg-black/60 border border-[#B6963B]/50 rounded-2xl p-10 shadow-lg hover:scale-105 hover:border-[#B6963B] transition-all duration-300">
-            <Crown className="w-12 h-12 text-[#B6963B] mb-6" />
-            <h3 className="text-2xl font-semibold text-[#B6963B]">Executive Elite</h3>
+            <ShieldCheck className="w-12 h-12 text-[#B6963B] mb-6" />
+            <h3 className="text-2xl font-semibold text-[#B6963B]">Trusted Excellence</h3>
             <p className="mt-4 text-gray-300 text-sm leading-relaxed">
-              Exclusive one-on-one care, luxury wellness retreats, and complete
-              corporate health strategy integration.
+              Proven expertise in delivering tailored wellness services for world-class hotels and communities.
             </p>
           </div>
         </motion.div>
+
+        </section>
       </motion.div>
     </section>
   )

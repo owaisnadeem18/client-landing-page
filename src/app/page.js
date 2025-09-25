@@ -18,8 +18,6 @@ export default function Home() {
     < div className="" >
     <Header/>
     <Hero/>
-    
-    <Footer/>
     </div>
 
   );

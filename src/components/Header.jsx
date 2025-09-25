@@ -1,185 +1,124 @@
 "use client"
+
 import React, { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
-import { NavItems } from "./NavItem"
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("home")
+  const [activeSection, setActiveSection] = useState("")
+  const pathname = usePathname()
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    const onScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener("scroll", onScroll)
 
-  // IntersectionObserver for active section
-  useEffect(() => {
-    const sections = Array.from(document.querySelectorAll("section[id]"))
-    if (!sections.length) return
-
+    // sections ka scroll detection
+    const sections = document.querySelectorAll("section[id]")
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
+            setActiveSection(`#${entry.target.id}`)
           }
         })
       },
-      { threshold: 0.55 }
+      { threshold: 0.6 } // section 60% visible ho to active
     )
 
-    sections.forEach((s) => observer.observe(s))
-    return () => observer.disconnect()
+    sections.forEach((sec) => observer.observe(sec))
+
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      sections.forEach((sec) => observer.unobserve(sec))
+    }
   }, [])
 
   const navLinks = [
-    { name: "Home", href: "#home", id: "home" },
-    { name: "Services", href: "#services", id: "services" },
-    { name: "About", href: "#about", id: "about" },
-    { name: "Contact", href: "#contact", id: "contact" },
+    { name: "About", href: "/#about" },
+    { name: "Services", href: "/#services" },
+    { name: "Benefits", href: "/#benifits" },
+    { name: "Contact", href: "/#contact" },
   ]
 
   return (
-    <motion.header
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
-      className={`sticky top-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "backdrop-blur-xl bg-gradient-to-r from-black/90 via-black/80 to-black/90 border-b border-[#B6963B]/30 shadow-lg"
-          : "bg-gradient-to-r from-black/70 via-black/60 to-black/70"
+    <header
+      className={`fixed top-0 w-full z-50 transition-colors duration-500 ${
+        scrolled ? "bg-black/90 shadow-md" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <div className="perspective-[1000px]">
+            <Image
+              src="/logo-massage-app.png"
+              alt="Partner Logo"
+              width={40}
+              height={40}
+              className="object-cover animate-spin-horizontal"
+            />
+          </div>
+
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            initial={{ y: -30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 10,
+              duration: 1.5,
+            }}
           >
-            <Link href="/" className="flex items-center gap-2">
-              <Image
-                src="/logo-massage-app.png"
-                alt="Opulent Touch Logo"
-                width={140}
-                height={40}
-                className="object-contain"
-              />
+            <Link href="/" className="text-xl sm:text-2xl font-bold text-white">
+              Opulent <span className="text-[#B6963B]">Touch</span>
             </Link>
           </motion.div>
-
-          {/* Desktop Nav */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: {
-                transition: { staggerChildren: 0.1 },
-              },
-            }}
-            className="hidden md:flex items-center gap-6"
-          >
-            {navLinks.map((link) => (
-              <motion.div
-                key={link.id}
-                variants={{
-                  hidden: { opacity: 0, y: -10 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-              >
-                <Link
-                  href={link.href}
-                  className={`relative text-sm font-medium transition-colors ${
-                    activeSection === link.id
-                      ? "text-[#B6963B]"
-                      : "text-gray-200 hover:text-[#B6963B]"
-                  }`}
-                >
-                  {link.name}
-                  {activeSection === link.id && (
-                    <motion.span
-                      layoutId="underline"
-                      className="absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-[#B6963B] to-[#d1a94e] rounded-full"
-                    />
-                  )}
-                </Link>
-              </motion.div>
-            ))}
-<motion.div whileHover={{ scale: 1.05 }}>
-  <Button
-    size="sm"
-    onClick={() => {
-      const section = document.getElementById("contact")
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" })
-        // Agar URL hash bhi dikhana ho toh:
-        window.history.pushState(null, "", "#contact")
-      }
-    }}
-    className="ml-2 bg-[#B6963B] text-black hover:bg-[#d1a94e] rounded-xl shadow-md hover:shadow-lg transition"
-  >
-    Request Consultation
-  </Button>
-</motion.div>
-          </motion.div>
-
-          {/* Mobile Hamburger */}
-          <div className="md:hidden">
-            <button
-              aria-label="Open menu"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded-md hover:bg-gray-800 transition"
-            >
-              {mobileOpen ? (
-                <X className="text-[#B6963B]" />
-              ) : (
-                <Menu className="text-[#B6963B]" />
-              )}
-            </button>
-          </div>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      {mobileOpen && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="md:hidden bg-black/95 backdrop-blur-lg border-t border-[#B6963B]/30 shadow-lg"
-        >
-          <div className="px-4 pt-3 pb-5 space-y-3">
-            {navLinks.map((link) => (
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => {
+            const isActive =
+              pathname === "/login"
+                ? false
+                : activeSection === link.href.replace("/#", "#")
+
+            return (
               <Link
-                key={link.id}
+                key={link.name}
                 href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className={`block text-base transition ${
-                  activeSection === link.id
-                    ? "text-[#B6963B] font-semibold"
-                    : "text-gray-300 hover:text-[#B6963B]"
-                }`}
+                className={`
+                  relative text-white transition-colors
+                  hover:text-[#B6963B]
+                  after:absolute after:left-1/2 after:-translate-x-1/2
+                  after:bottom-[-6px] after:h-[2px]
+                  after:bg-[#B6963B] after:rounded-full
+                  after:transition-all after:duration-300
+                  after:w-0 hover:after:w-[70%]
+                  ${isActive ? "text-[#B6963B] after:w-[70%]" : ""}
+                `}
               >
                 {link.name}
               </Link>
-            ))}
+            )
+          })}
 
-            <motion.div whileHover={{ scale: 1.03 }}>
-              <Button className="mt-3 w-full bg-[#B6963B] text-black hover:bg-[#d1a94e] shadow-md hover:shadow-lg rounded-xl">
-                Request Consultation
-              </Button>
-            </motion.div>
-          </div>
-        </motion.div>
-      )}
-    </motion.header>
+          {/* Login button */}
+          <Link
+            href="/login"
+            className={`ml-4 px-4 py-2 border border-[#B6963B] text-[#B6963B] rounded-lg hover:bg-[#B6963B] hover:text-black transition ${
+              pathname === "/login" ? "bg-[#B6963B] text-black" : ""
+            }`}
+          >
+            Log In
+          </Link>
+        </nav>
+      </div>
+    </header>
   )
 }
