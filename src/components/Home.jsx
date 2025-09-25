@@ -78,7 +78,7 @@ const Home = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-10 text-left"
+          className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 text-left"
         >
           {/* Co-Branding */}
           <div className="bg-black/60 border border-[#B6963B]/50 rounded-2xl p-10 shadow-lg hover:scale-105 hover:border-[#B6963B] transition-all duration-300">

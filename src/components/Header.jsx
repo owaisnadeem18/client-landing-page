@@ -6,11 +6,18 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 
 export function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("")
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+
   const pathname = usePathname()
 
   useEffect(() => {
@@ -27,7 +34,7 @@ export function Header() {
           }
         })
       },
-      { threshold: 0.6 } // section 60% visible ho to active
+      { threshold: 0.6 }
     )
 
     sections.forEach((sec) => observer.observe(sec))
@@ -118,6 +125,45 @@ export function Header() {
             Log In
           </Link>
         </nav>
+
+        {/* Mobile Nav */}
+        <div className="md:hidden">
+<Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+  <SheetTrigger>
+    <Menu className="text-white h-6 w-6" />
+  </SheetTrigger>
+
+  <SheetContent side="right" className="bg-black text-white w-64">
+    <nav className="flex flex-col gap-6 mt-10 px-3">
+      {navLinks.map((link) => {
+        const isActive =
+          pathname === "/login" ? false : activeSection === link.href.replace("/#", "#");
+
+        return (
+          <Link
+            key={link.name}
+            href={link.href}
+            className={`text-lg ${isActive ? "text-[#B6963B]" : "text-white"}`}
+            onClick={() => setIsSheetOpen(false)} // <-- Close sheet on click
+          >
+            {link.name}
+          </Link>
+        );
+      })}
+      <Link
+        href="/login"
+        className={`px-4 py-2 border border-[#B6963B] text-[#B6963B] rounded-lg hover:bg-[#B6963B] hover:text-black transition ${
+          pathname === "/login" ? "bg-[#B6963B] text-black" : ""
+        }`}
+        onClick={() => setIsSheetOpen(false)} // <-- Close sheet on login click
+      >
+        Log In
+      </Link>
+    </nav>
+  </SheetContent>
+</Sheet>
+
+        </div>
       </div>
     </header>
   )
